@@ -22,3 +22,4 @@ steps:
     command:
       - "release.sh"
     concurrency: 1
+    concurrency_group: "docker-release"
