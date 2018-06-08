@@ -9,7 +9,7 @@ TARGET_TAG="$(buildkite-agent meta-data get target-tag)"
 docker pull "${DOCKER_IMAGE}:${SOURCE_TAG}"
 
 # Tag image
-docker tag "${DOCKER_IMAGE}:${SOURCE_TAG}" "${DOCKER_IMAGE}:${TARGE_TAG}"
+docker tag "${DOCKER_IMAGE}:${SOURCE_TAG}" "${DOCKER_IMAGE}:${TARGET_TAG}"
 
 # Push new tag
 docker push "${DOCKER_IMAGE:${TARGET_TAG}"
