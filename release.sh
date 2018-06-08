@@ -1,4 +1,4 @@
-#!/bin/sh -eu
+#!/bin/sh -eux
 
 DOCKER_IMAGE="$(buildkite-agent meta-data get docker-image)"
 SOURCE_TAG="$(buildkite-agent meta-data get source-tag)"
