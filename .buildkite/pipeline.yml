@@ -13,7 +13,7 @@ steps:
 
   - name: "Test"
     command:
-      - "docker run --rm -ti ${BUILDKITE_PIPELINE_SLUG}:${BUILDKITE_COMMIT} bash -c '/usr/bin/rpm -q firefox google-chrome-stable nodejs && grunt --version && testem --version && istanbul help"
+      - "docker run --rm -ti ${BUILDKITE_PIPELINE_SLUG}:${BUILDKITE_COMMIT} bash -c '/usr/bin/rpm -q firefox google-chrome-stable nodejs && grunt --version && testem --version && istanbul help'"
     timeout_in_minutes: 1
     <<: *agent_tags
 
