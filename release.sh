@@ -16,4 +16,4 @@ docker push "${DOCKER_IMAGE:${TARGET_TAG}"
 
 # Cleanup
 docker image rm -f "${DOCKER_IMAGE}:${SOURCE_TAG}"
-docker image rm -f "${DOCKER_IMAGE:${TARGET_TAG}"
+docker image rm -f "${DOCKER_IMAGE}:${TARGET_TAG}"
