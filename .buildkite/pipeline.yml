@@ -23,9 +23,21 @@ steps:
   - wait
 
   - name: "Publish"
-    command: "docker push ${DOCKER_IMAGE}:${BUILDKITE_COMMIT}"
+    command:
+      - "docker push ${DOCKER_IMAGE}:${BUILDKITE_COMMIT}"
     timeout_in_minutes: 5
     <<: *agent_tags
+
+  - wait
+
+  - name: "Trigger docker-tag"
+    trigger: "docker-tag"
+    branches: "master"
+    async: true
+    build:
+      env:
+        DOCKER_IMAGE: "${DOCKER_IMAGE}"
+        SOURCE_TAG: "${BUILDKITE_COMMIT}"
 
   - wait: ~
     continue_on_failure: true
