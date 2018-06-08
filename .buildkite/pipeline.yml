@@ -1,0 +1,33 @@
+agent_tags: &agent_tags
+  agents:
+    name: "${BUILDKITE_AGENT_META_DATA_NAME?}"
+
+steps:
+  - name: "Build"
+    command:
+      - "docker build -t ${BUILDKITE_PIPELINE_SLUG}:${BUILDKITE_COMMIT} ."
+    timeout_in_minutes: 10
+    <<: *agent_tags
+
+  - wait
+
+  - name: "Test"
+    command:
+      - "docker run --rm -ti ${BUILDKITE_PIPELINE_SLUG}:${BUILDKITE_COMMIT} bash -c '/usr/bin/rpm -q firefox google-chrome-stable nodejs && grunt --version && testem --version && istanbul help"
+    timeout_in_minutes: 1
+    <<: *agent_tags
+
+  - wait
+
+  - name: "Publish"
+    command: "docker push ${BUILDKITE_PIPELINE_SLUG}:${BUILDKITE_COMMIT}"
+    timeout_in_minutes: 5
+    <<: *agent_tags
+
+  - wait: ~
+    continue_on_failure: true
+
+  - name: "Cleanup"
+    command: "docker image rm --force ${BUILDKITE_PIPELINE_SLUG}:${BUILDKITE_COMMIT}"
+    timeout_in_minutes: 1
+    <<: *agent_tags
