@@ -29,7 +29,7 @@ steps:
   - wait
 
   - name: "Release"
-    trigger: "docker-release"
+    trigger: "docker-tag-image"
     branches: "master"
     async: true
     build:
