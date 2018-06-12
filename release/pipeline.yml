@@ -1,25 +1,23 @@
-# DOCKER_IMAGE and SOURCE_TAG are passed as environment variables from the pipeline that triggered us so we can populate the fields.
-
 steps:
   - block: "Release!"
     fields:
-      - text: "Docker image"
-        key: "docker-image"
-        default: "${DOCKER_IMAGE}"
+      - text: "Docker Image Name"
+        key: "image-name"
+        default: "${IMAGE_NAME}"
         required: true
 
-      - text: "Source tag"
+      - text: "Image Source Tag"
         key: "source-tag"
         default: "${SOURCE_TAG}"
         required: true
 
-      - text: "Target tag"
+      - text: "Image Target Tag"
         key: "target-tag"
         default: "latest"
         required: true
 
   - name: ":rocket:"
     command:
-      - "release.sh"
+      - "./release/release.sh"
     concurrency: 1
     concurrency_group: "docker-release"
