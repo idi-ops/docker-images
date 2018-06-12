@@ -1,0 +1,46 @@
+# Run all steps on the same agent
+agent_tags: &agent_tags
+  agents:
+    name: "${BUILDKITE_AGENT_META_DATA_NAME?}"
+
+steps:
+  - name: "Build"
+    command:
+      - "docker build -t ${IMAGE_NAME?}:${BUILDKITE_COMMIT} ."
+    timeout_in_minutes: 10
+    <<: *agent_tags
+
+  - wait
+
+  - name: "Smoke Test"
+    command:
+      - "docker run --rm -ti ${IMAGE_NAME?}:${BUILDKITE_COMMIT} bash -c '/usr/bin/rpm -q firefox google-chrome-stable nodejs && grunt --version && testem --version && istanbul help'"
+    timeout_in_minutes: 1
+    <<: *agent_tags
+
+  - wait
+
+  - name: "Push"
+    command:
+      - "docker push ${IMAGE_NAME?}:${BUILDKITE_COMMIT}"
+    timeout_in_minutes: 5
+    <<: *agent_tags
+
+  - wait
+
+  - name: "Release"
+    trigger: "docker-tag-image"
+    branches: "master"
+    async: true
+    build:
+      env:
+        IMAGE_NAME: "${IMAGE_NAME}"
+        SOURCE_TAG: "${BUILDKITE_COMMIT}"
+
+  - wait: ~
+    continue_on_failure: true
+
+  - name: "Cleanup"
+    command: "docker image rm --force ${IMAGE_NAME}:${BUILDKITE_COMMIT}"
+    timeout_in_minutes: 1
+    <<: *agent_tags
