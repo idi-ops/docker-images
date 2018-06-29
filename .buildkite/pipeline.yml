@@ -1,0 +1,19 @@
+# https://github.com/buildkite/feedback/issues/173
+agent_tags: &agent_tags
+  agents:
+    name: "${BUILDKITE_AGENT_META_DATA_NAME?}"
+
+steps:
+  - name: "Build"
+    command:
+      - "docker build -t ${BUILDKITE_PIPELINE_SLUG} ."
+    timeout_in_minutes: 15
+    <<: *agent_tags
+
+  - wait: ~
+    continue_on_failure: true
+
+  - name: "Cleanup"
+    command: "docker image rm --force ${IMAGE_NAME}:${BUILDKITE_COMMIT}"
+    timeout_in_minutes: 1
+    <<: *agent_tags
