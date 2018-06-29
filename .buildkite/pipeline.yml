@@ -2,5 +2,5 @@ steps:
   - name: "Build"
     command:
       - "docker build -t ${BUILDKITE_PIPELINE_SLUG} ."
-      - "docker image rm --force ${IMAGE_NAME}:${BUILDKITE_COMMIT}"
+      - "docker image rm --force ${BUILDKITE_PIPELINE_SLUG}"
     timeout_in_minutes: 15
