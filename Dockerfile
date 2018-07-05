@@ -4,7 +4,7 @@ FROM fedora:28
 ENV FIREFOX_VERSION 61.0
 ENV CHROME_VERSION 67.0.3396.99-1
 ENV NODE_BRANCH 10
-ENV NODE_VERSION 10.5.0
+ENV NODE_VERSION 10.6.0
 
 # Install OS-level dependencies
 RUN dnf -y install git python make gcc && \
@@ -16,9 +16,6 @@ RUN dnf -y install git python make gcc && \
 # Install npm dependencies
 RUN npm install -g grunt-cli istanbul testem && npm cache clean --force
 
-# Add and switch to regular user
-RUN useradd docker
-USER docker
-
 # Run shell by default
-CMD ["sh"]
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
