@@ -2,9 +2,9 @@ FROM fedora:28
 
 # Version definitions
 ENV FIREFOX_VERSION 61.0.1
-ENV CHROME_VERSION 68.0.3440.75-1
+ENV CHROME_VERSION 68.0.3440.106-1
 ENV NODE_BRANCH 10
-ENV NODE_VERSION 10.7.0
+ENV NODE_VERSION 10.9.0
 
 # Install OS-level dependencies
 RUN dnf -y install git python make gcc && \
