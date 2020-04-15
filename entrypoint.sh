@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-# Follows fedora:28 entrypoint/cmd behavior (no defaults in Dockerfile)
+# Follows fedora entrypoint/cmd behavior (no defaults in Dockerfile)
 if [[ -z "$*" ]]; then
   echo "No command specified"
   exit 1
@@ -19,6 +19,6 @@ if [[ -n "${USER-}" && -n "${USER_ID-}" && -n "${USER_GID-}" ]]; then
 
 else
 
-  exec "$@"
+  exec xvfb-run "$@"
 
 fi
