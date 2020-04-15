@@ -1,13 +1,14 @@
 # docker-node-browsers
 
-Fedora 28 image with:
+Fedora image with:
 
+* Xvfb
 * Firefox
 * Chrome
 * Node.js
 * npm packages:
   * grunt-cli
-  * istanbul
+  * nyc
   * testem
 
 # Running
