@@ -1,5 +1,7 @@
 # docker-node-browsers
 
+![CI](https://github.com/idi-ops/docker-node-browsers/workflows/Docker%20Image%20Push/badge.svg)
+
 Fedora image with:
 
 * Xvfb
