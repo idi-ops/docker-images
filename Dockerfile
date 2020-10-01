@@ -1,12 +1,12 @@
-FROM fedora:31
+FROM fedora:32
 
-ENV FIREFOX_VERSION 75.0
+ENV FIREFOX_VERSION 81.0
 
 ENV CHROME_REPO_URL http://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable
-ENV CHROME_VERSION 81.0.4044.92-1
+ENV CHROME_VERSION 85.0.4183.121-1
 
 ENV NODE_REPO_URL https://rpm.nodesource.com/pub_12.x/fc/31/x86_64/nodejs
-ENV NODE_VERSION 12.16.2
+ENV NODE_VERSION 12.18.4
 
 RUN dnf -y install git python make gcc Xvfb                                   \
                    firefox-${FIREFOX_VERSION}                                 \
